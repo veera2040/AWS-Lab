@@ -1,1 +1,1 @@
-# AWS-Lab
+Cloud Formation templates
