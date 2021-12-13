@@ -73,6 +73,7 @@
 					"Ref": "VPC"
 				},
 				"CidrBlock": "10.16.0.0/24",
+				"MapPublicIpOnLaunch": "True",
 				"Tags": [{
 					"Key": "Application",
 					"Value": {
