@@ -63,6 +63,10 @@
 					"Value": {
 						"Ref": "AWS::StackId"
 					}
+				},
+				{
+					"Key":"Name",
+					"Value":"blue_vpc"
 				}]
 			}
 		},
@@ -79,6 +83,10 @@
 					"Value": {
 						"Ref": "AWS::StackId"
 					}
+				},
+				{
+					"Key":"Name",
+					"Value":"blue_subnet"
 				}]
 			}
 		},
@@ -90,6 +98,10 @@
 					"Value": {
 						"Ref": "AWS::StackId"
 					}
+				},
+				{
+					"Key":"Name",
+					"Value":"blue_igw"
 				}]
 			}
 		},
@@ -115,6 +127,10 @@
 					"Value": {
 						"Ref": "AWS::StackId"
 					}
+				},
+				{
+					"Key":"Name",
+					"Value":"blue_rt"
 				}]
 			}
 		},
@@ -153,6 +169,10 @@
 					"Value": {
 						"Ref": "AWS::StackId"
 					}
+				},
+				{
+					"Key":"Name",
+					"Value":"blue_nacl"
 				}]
 			}
 		},
@@ -318,6 +338,12 @@
 				"KeyName": {
 					"Ref": "KeyName"
 				},
+				"Tags" : [
+				{
+					"Key":"Name",
+					"Value":"blue_server"
+				}
+				],
 				"ImageId": {
 					"Fn::FindInMap": ["RegionMap", {
 						"Ref": "AWS::Region"
@@ -337,7 +363,13 @@
 			"Value": {
 				"Ref": "EC2Instance"
 			}
-		}
+		},
+		"MyEC2InstancePublicIP": {
+			"Description":"Public IP is:",
+			"Value": {
+			"Fn::GetAtt": ["EC2Instance", "PublicIp"]
+      }
+    }
 	}
 
 }
