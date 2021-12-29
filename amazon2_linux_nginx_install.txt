@@ -1,0 +1,9 @@
+#!/bin/bash
+
+yum update -y
+
+amazon-linux-extras install nginx1.12 -y
+
+service nginx start
+
+echo '<h1>webserver-1</h1>' >> /usr/share/nginx/html/index.html
