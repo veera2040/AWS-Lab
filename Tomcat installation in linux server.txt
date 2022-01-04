@@ -1,0 +1,16 @@
+wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.56/bin/apache-tomcat-9.0.56.tar.gz -P /tmp
+
+sudo tar -xf /tmp/apache-tomcat-${VERSION}.tar.gz -C /opt/tomcat/
+
+sudo tar -xf /tmp/apache-tomcat-9.0.56.tar.gz -C /opt/tomcat/
+
+
+tomcat-users.xml
+<?xml version='1.0' encoding='utf-8'?>
+<tomcat-users>
+    <role rolename="manager-gui"/>
+    <user username="tomcat" password="tomcat" roles="manager-gui,manager-script,manager-status"/>
+ </tomcat-users>
+ 
+ 
+ 
