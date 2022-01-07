@@ -1,0 +1,29 @@
+---
+  - hosts: all
+    become: True
+    become_method: sudo
+    become_user: root
+    gather_facts: True
+
+    tasks:
+
+      - name: "loop through list"
+        debug:
+          msg: "An item: {{item}}"
+        with_items:
+              - 1
+              - 2
+              - 3
+      - name: create users
+        user:
+          name: "{{item}}"
+          password: '$1$DevOps$17DHOhM7aFG9/7ostlH0D0'
+          state: present
+          shell: /bin/bash
+          system: no
+          createhome: yes
+          home: /home/"{{item}}"
+
+        with_items:
+                 - testuser1
+                 - testuser2
