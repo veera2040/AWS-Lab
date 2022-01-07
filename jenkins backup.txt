@@ -1,0 +1,35 @@
+Jenkins backup server:
+
+1) Install plugins as below
+  Thinbackup, Periodic backup, Backup
+  
+2) Manage Jenkins -> Uncategorized -> Backup Manager
+
+
+3) Login the Jenkins server -> create backup location path and copy
+	chmod 777 backup/
+
+4) Backup Configuration
+   backup dir : /opt/backup
+   
+   select no shutdown
+   Backup content: 
+   select all
+   
+5) save
+
+
+
+To start the backup
+
+click backup hudson configuration
+
+
+(or) 
+
+thin backup
+
+(or)
+
+periodic backup
+

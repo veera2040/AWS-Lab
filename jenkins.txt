@@ -1,0 +1,159 @@
+ubuntu server:
+1) install jdk 1.8
+sudo apt-get install default-jdk
+
+   
+2) set java environment variable
+
+vim /etc/environment
+JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre/"
+root@ip-10-0-1-243:~# source /etc/environment
+root@ip-10-0-1-243:~# echo $JAVA_HOME
+/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+root@ip-10-0-1-243:~#
+
+
+3) intall latest maven
+apt-get -y install maven
+mvn --version
+4) set maven environment variable
+vim /etc/profile.d/maven.sh
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+export M2_HOME=/usr/share/maven
+export MAVEN_HOME=/usr/share/maven
+export PATH=${M2_HOME}/bin:${PATH}
+
+source /etc/profile.d/maven.sh
+
+5) install jenkins
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt update
+sudo apt install jenkins
+sudo systemctl start jenkins
+sudo systemctl status jenkins
+
+http://your_server_ip_or_domain:8080
+administrator
+b94ed93d78da4882a39cb164a8475106
+
+6) git hub project add in jenkins
+General->GitHub project->
+Project url:
+
+7) write a shell script for maven build creation
+
+rm -rf webapp
+echo "git project to clone"
+echo .
+echo .
+git clone https://github.com/veera2040/webapp.git
+echo .
+echo .
+cd webapp/test
+mvn package
+echo "running the script now"
+echo .
+cd target
+mv test.war /tmp/test.war.`date '+%Y%m%d%H%M%S'`
+echo .
+
+8) execute a build in manually in jenkins
+
+
+automatic build when commit the code in github:
+=================================================
+1) github
+Project Repo-> Settings -> Webhooks --> add the below formed jenkins url and activate.
+
+http://ec2-13-235-244-217.ap-south-1.compute.amazonaws.com:8080/github-webhook/
+
+2) Jenkins
+
+step1) NewItem -> enter item name (sample app) -> Free style project -> Ok
+step2) General -> GitHub project
+Project url
+https://github.com/veera2040/webapp.git/
+step3) SCM
+select git and add url, select branch name
+step4) Build Triggers
+select GitHub hook trigger for GITScm polling
+
+step5) build execute shell
+
+stpe6) Click save and apply
+
+step7) commit the code and see the build execute output console
+
+
+
+windows: jenkins path
+
+c:/Windows/System32/cofig/systemprofile/AppData/Local/Jenkins.Jenkins
+
+
+wget https://drive.google.com/u/0/uc?id=&export=download
+
+crontab:
+===========
+min hrs DayOfMonth monthOfYear weekOfDay
+06 05 21 12 06,07
+
+above job execute dec 21st 5:6 am every saturday and sunday
+0-59 mins
+0-11 hrs
+1-31 days
+1-12 months
+0,7 -- sunday (1-monday,...6-friday)
+
+*/2 * * * * ->every 2mins execute (*/2)
+
+
+Build Triggers:
+rigger builds remotely (e.g., from scripts)
+JENKINS_URL/job/job1/build?token=TOKEN_NAME
+
+http://ec2-15-206-123-58.ap-south-1.compute.amazonaws.com:8080/job/job1/build?token=abc123
+
+
+Build after other projects are built:
+here, you have to pass other project (i.e; upstream project)
+
+Build periodically: --> you have to pass crontab expression
+
+GitHub hook trigger for GITScm polling:
+
+URL pass in github repositary as below place
+Settings -> Webhooks -> Add webhook
+http://ec2-15-206-123-58.ap-south-1.compute.amazonaws.com:8080/github-webhook/
+
+Poll SCM: It will build if any SCM commit
+* * * * *
+
+
+Post-build Actions:
+Build other projects --> you have to pass project name (i.e; downstream project)
+
+smtp gmail: 
+https://www.google.com/settings/security/lesssecureapps
+https://accounts.google.com/DisplayUnlockCaptcha
+
+Plugins:
+
+pipeline concept plugins:
+build pipeline
+delivery pipeline
+
+Nested view plugin -> To create folder with required jobs
+
+deploy to container -> To deploy war/ear to container
+
+rebuilder -> rebuild the project (if you use parameterized build, again no need to select)
+metrics disk usage -> To caliculate jobs workspace
+Next Build Number -> build number set to next for deleted failed build (success build next number not set)
+clone workspace scm -> copy the workspace between the 2 jobs
+blue ocean -> to view screen digital view
+
+
+https://github.com/polarapu

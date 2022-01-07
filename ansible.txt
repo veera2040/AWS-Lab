@@ -1,0 +1,93 @@
+Ansible: It used for configuration management for launched instances
+
+It works on SSH. Servers and Network automatioin
+
+1) Create anisble controller(i.e;master) instance
+
+2) ansible documentaion (search version)
+
+3) sudo apt-get update
+   sudo apt-get install software-properties-common
+   sudo apt-add-repository --yes --update ppa:ansible/ansible
+   sudo apt-get install ansible
+   #passwd root
+   
+4) $ssh-keygen To generate public and private key with ubuntu user
+	$cd .ssh
+	
+	copy the public key in client servers
+	ssh-copy-id -f ubuntu@ip
+	sudo su -
+	nano /etc/ssh/sshd_config
+	service sshd restart
+	passwd ubuntu
+	
+5) #ansible --version
+
+	#mkdir /testfolder --> will create multiple ansible servers for multiple clients like as below
+	#cp /etc/ansible/ansible.cfg /testfolder/
+	#cd /testfolder
+	#ansible --version
+	
+6) #ansible all -m ping
+
+7) #cd testfolder/
+	#nano hosts
+	[allhosts]
+	10.0.0.100
+	
+8) #ansible -i hosts -m ping all
+   
+   #nano /etc/ssh/sshd_config
+   PasswordAuthentication yes
+   #defaule value is no, you have to set yes
+   ubuntu@ip:10.0.0.100:/testfolder$ssh-keygen
+   $ssh-copy-id ubuntu@ip
+   $ansible -i hosts -m ping all
+   
+ 9) create client instance 10.0.0.200
+	#sudo su -
+	#passwd ubuntu
+	#nano /etc/ssh/sshd_config
+	PasswordAuthentication yes
+	$service sshd restart
+	
+10) In master server execute this
+	$ssh-copy-id ubuntu@10.0.0.200
+	$ssh ubuntu@10.0.0.200
+	$sudo nano hosts
+	[allhosts]
+	10.0.0.100
+	10.0.0.200
+	$ansible -i hosts -m ping all
+	$ansible -i hosts -a "uname" all
+	$ansible -i hosts -a "cat /etc/passwd" 10.0.0.200
+	
+11) in client execute commands
+	#apt-get update
+	#apt-get install python-pip
+   
+   
+   Generate encrypted password
+   #openssl passwd -salt 'some_plain_salt' -1 'some_plain_pass'
+
+
+
+$ ansible -i /devops/hosts -m ping all
+$ ansible -i /devops/hosts -m ping web
+$ ansible -i /devops/hosts -m ping app
+$ ansible -i /devops/hosts -m user all -a "name=testuser password='hello' state=present" -b
+$ ansible -i /devops/hosts -m user all -a "name=testuser state=absent" -b
+$ ansible-playbook  CreateUserPlaybook.yml --syntax-check
+$ ansible-playbook -i /devops/hosts CreateUserPlaybook.yml -b
+
+
+
+Step 1: uninstall ansible and python2.7 (ensure that there is no other softwares depend on python2.7 and back up your ansible config files)
+
+apt remove ansible
+apt purge python2.7-minimal
+Step 2: install ansible by pip3
+pip3 install ansible
+
+See https://docs.ansible.com/ansible/latest/reference_appendices/python_3_support.html for more details.
