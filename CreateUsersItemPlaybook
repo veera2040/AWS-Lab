@@ -22,7 +22,7 @@
           shell: /bin/bash
           system: no
           createhome: yes
-          home: /home/"{{item}}"
+          home: /home/{{item}}
 
         with_items:
                  - testuser1
