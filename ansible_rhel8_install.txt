@@ -1,0 +1,54 @@
+Step 1: Update on RHEL 8
+#sudo yum update -y
+
+Step 2: Install Python3 on RHEL 8
+#sudo yum install python3
+#python3 -V
+
+Step 3: Install Ansible
+$subscription-manager repos --enable ansible-2.8-for-rhel-8-x86_64-rpms
+#sudo yum install ansible -y
+#ansible --version
+
+login with ec2-user and 
+
+step4:
+$ssh-keygen To generate public and private key with ec2-user user
+	$cd .ssh
+	
+	copy the public key in client servers
+	ssh-copy-id -f ec2-user@ip
+	sudo su -
+	nano /etc/ssh/sshd_config
+	service sshd restart
+	passwd ec2-user
+
+step5: make a testfolder in ec2-user of home directory
+$mkdir devops
+ec2-user$cd devops
+$sudo cp /etc/ansible/ansible.cfg ./
+
+step6: Copy the public key client server & login test (manually copy the public key authorized_user file)
+#ssh-copy-id -f ec2-user@ip
+#ssh user@remote-IP address
+
+step7: check ansible is working with adhoc commands
+
+ansible -m ping all
+ansible -i hosts ping all
+ansible -m ping webserver
+ansible -m ping  ip
+
+ 
+$ansible -i hosts appserver -m copy -a "src=/etc/ansible/ansible.cfg dest=/tmp/"
+
+$ansible -i hosts appserver -m reboot -a reboot_timeout=3600 -u ec2-user -b
+
+$ ansible -i hosts webserver -m yum -a "name=httpd state=installed" -b
+
+# To Start
+ansible -i hosts webserver -m service -a "name=httpd state=started enabled=yes" -b
+
+# To Stop
+ansible -i hosts webserver -m service -a "name=httpd state=stopped enabled=yes" -b
+restarted
